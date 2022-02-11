@@ -50,7 +50,7 @@ function App() {
       dataUrl = canvas.toDataURL()
 
       
-      axios.post('http://192.168.0.58:6001/validar', { "dataUrl": dataUrl })
+      axios.post('http://192.168.0.58:6061/validar', { "dataUrl": dataUrl })
       .then(res => liberacao(res))
     }
     
@@ -168,7 +168,7 @@ function App() {
     let labelCadastro = document.getElementById('labelCadastro')
     label = labelCadastro.value
 
-    axios.post('http://192.168.0.58:6001/cadastrar', { "label": label, "dataUrl1": dataUrl1, "dataUrl2": dataUrl2 })
+    axios.post('http://192.168.0.58:6061/cadastrar', { "label": label, "dataUrl1": dataUrl1, "dataUrl2": dataUrl2 })
       .then(res => cadastro(res))
 
     /*let dataUrl1, dataUrl2, label
