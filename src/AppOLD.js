@@ -53,25 +53,6 @@ function App() {
       axios.post('http://192.168.0.58:6061/validar', { "dataUrl": dataUrl })
       .then(res => liberacao(res))
     }
-    
-
-
-
-    /*var reader = new FileReader();
-    reader.readAsDataURL(imgFile);
-    reader.onloadend = function (e) {
-      dataUrl = e.target.result
-      //console.log(dataUrl)
-
-      //setDebug(dataUrl)
-
-      //setImageSrc(dataUrl)
-
-
-      axios.post('http://192.168.0.58:6001/validar', { "dataUrl": dataUrl })
-        .then(res => liberacao(res))
-    }*/
-
 
   }
 
