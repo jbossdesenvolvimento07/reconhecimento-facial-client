@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { Home, Cadastro } from "./components";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/cadastro" element={<Cadastro />} />
+    </Routes>
+
+  </Router>,
+
   document.getElementById('root')
 );
 
