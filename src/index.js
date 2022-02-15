@@ -5,13 +5,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Home, Cadastro } from "./components";
+import { Home, Cadastro, Validacao } from "./components";
 
 ReactDOM.render(
   <Router>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="/validacao" element={<Validacao />} />
     </Routes>
 
   </Router>,

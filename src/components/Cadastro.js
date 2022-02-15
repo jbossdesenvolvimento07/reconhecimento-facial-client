@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { NavLink } from "react-router-dom";
-import { Progress } from 'reactstrap';
+import axios from 'axios'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 function Cadastro() {
 
     const [etapaCad, setEtapaCad] = React.useState(1)
-    const [progressoFotos, setProgressoFotos] = React.useState(0)
+    const [carregando, setCarregando] = React.useState(false)
 
-    useEffect(() => {
-        console.log(progressoFotos)
-    }, [progressoFotos])
+    const [cadastroSuccess, setCadastroSuccess] = React.useState(false)
+    const [cadastroFail, setCadastroFail] = React.useState(false)
+    const [cadastroFailImages, setCadastroFailImages] = React.useState([])
 
     const [cpf, setCpf] = React.useState('')
     const [dataUrls, setDataUrls] = React.useState(['', '', '', '', ''])
@@ -41,50 +42,50 @@ function Cadastro() {
             <>
                 <div id='cardFoto1' className="mb-3 mx-5">
                     <h4 className='mt-2 mx-auto'>FOTO FRONTAL</h4>
-                    <img src='assets/frente.png' className="card-img-top" alt='imgMissing' />
+                    <img src='assets/frente.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
                         <input id='fileInp1' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(1) }} ></input>
-                        <label for='fileInp1' id="label1" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                        <label htmlFor='fileInp1' id="label1" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
                 </div>
 
 
                 <div id='cardFoto2' className="mb-3 mx-5 d-none">
                     <h4 className='mt-2 mx-auto'>FOTO LATERAL DIR.</h4>
-                    <img src='assets/latDir.png' className="card-img-top" alt='imgMissing' />
+                    <img src='assets/latDir.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
                         <input id='fileInp2' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(2) }}></input>
-                        <label for='fileInp2' id="label2" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                        <label htmlFor='fileInp2' id="label2" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
                 </div>
 
 
                 <div id='cardFoto3' className="mb-3 mx-5 d-none">
                     <h4 className='mt-2 mx-auto'>FOTO LATERAL ESQ.</h4>
-                    <img src='assets/latEsq.png' className="card-img-top" alt='imgMissing' />
+                    <img src='assets/latEsq.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
                         <input id='fileInp3' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(3) }}></input>
-                        <label for='fileInp3' id="label3" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                        <label htmlFor='fileInp3' id="label3" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
                 </div>
 
 
                 <div id='cardFoto4' className="mb-3 mx-5 d-none">
                     <h4 className='mt-2 mx-auto'>FOTO CIMA</h4>
-                    <img src='assets/cima.png' className="card-img-top" alt='imgMissing' />
+                    <img src='assets/cima.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
                         <input id='fileInp4' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(4) }}></input>
-                        <label for='fileInp4' id="label4" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                        <label htmlFor='fileInp4' id="label4" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
                 </div>
 
 
                 <div id='cardFoto5' className="mb-3 mx-5 d-none">
                     <h4 className='mt-2 mx-auto'>FOTO BAIXO</h4>
-                    <img src='assets/baixo.png' className="card-img-top" alt='imgMissing' />
+                    <img src='assets/baixo.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
                         <input id='fileInp5' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(5) }}></input>
-                        <label for='fileInp5' id="label5" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                        <label htmlFor='fileInp5' id="label5" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
                 </div>
 
@@ -93,19 +94,34 @@ function Cadastro() {
         )
     }
 
-    function ProgressBar() {
-        return(
-            <div className='d-block mb-3' style={{width: '80%'}}>
-                <Progress
-                    max="5"
-                    color="primary"
-                    value={progressoFotos}
-                />
+    function TelaCarregamento(props) {
+        return (
+            <div className='telaCarregamento d-flex flex-column align-items-center justify-content-center'>
+                <div class="lds-facebook">
+                    <div></div> <div></div> <div></div>
+                </div>
+                {props.description}
             </div>
         )
+
     }
 
+    function ImagensModalDeErro() {
 
+        let elements = []
+
+        for (let i = 0; i < cadastroFailImages.length; i++) {
+            elements.push(
+                <div className='col-6'>
+                    <div className="card mt-3">
+                        <img src={cadastroFailImages[i]} className="card-img-top" alt='' />
+                    </div>
+                </div>
+            )
+
+        }
+        return elements
+    }
 
 
     function loadImage(nInput) {
@@ -126,6 +142,8 @@ function Cadastro() {
             }
             imageObj.onload = function () {
 
+                console.log('imagem carregada')
+
                 canvas.width = imageObj.width * 0.2
                 canvas.height = imageObj.height * 0.2
 
@@ -136,7 +154,20 @@ function Cadastro() {
 
                 setDataUrls(dataUlrsTemp)
 
-                //console.log(dataUrls)
+
+                if (nInput !== 5) {
+                    const cardAtual = document.getElementById(`cardFoto${nInput}`)
+                    const cardNext = document.getElementById(`cardFoto${nInput + 1}`)
+
+                    cardAtual.classList.add('d-none')
+                    cardNext.classList.remove('d-none')
+                } else {
+                    setCarregando(true)
+
+                    axios.post('http://jboss.ddns.me:6061/cadastrar', { "label": cpf, "dataUrls": dataUrls })
+                        .then(res => handleCadastro(res))
+                }
+
             }
         }
         catch (err) {
@@ -145,32 +176,24 @@ function Cadastro() {
 
             setDataUrls(dataUlrsTemp)
 
-            //console.log(dataUrls)
         }
-
-
-        if (nInput != 5) {
-
-            if (imgFile) {
-                const cardAtual = document.getElementById(`cardFoto${nInput}`)
-                const cardNext = document.getElementById(`cardFoto${nInput + 1}`)
-
-                cardAtual.classList.add('d-none')
-                cardNext.classList.remove('d-none')
-
-
-                //setProgressoFotos(nInput)
-                
-            }
-
-
-        } else {
-            if (imgFile)
-                document.getElementById('btnCadastrar').classList.remove('d-none')
-        }
-
 
     }
+
+    function handleCadastro(res) {
+
+        setCarregando(false)
+
+        console.log(res)
+
+        if (res.data[1].Status === 'Cadastrado')
+            setCadastroSuccess(true)
+        else {
+            setCadastroFail(true)
+            setCadastroFailImages(res.data[0])
+        }
+    }
+
 
 
 
@@ -180,10 +203,56 @@ function Cadastro() {
     return (
         <div className='container-fluid d-flex flex-column justify-content-center align-items-center' style={{ width: '100vw', minHeight: '100vh' }}>
 
-            {etapaCad == 1 ? <Etapa1></Etapa1> : <></>}
+            {etapaCad === 1 ? <Etapa1></Etapa1> : <></>}
 
-            {etapaCad == 2 ? <ProgressBar></ProgressBar> : <></>}
-            {etapaCad == 2 ? <Etapa2></Etapa2> : <></>}
+            <>
+                {etapaCad === 2 ? <Etapa2></Etapa2> : <></>}
+            </>
+
+            {carregando ? <TelaCarregamento description='CADASTRANDO'></TelaCarregamento> : <></>}
+
+
+            <Modal fade={false} fullscreen isOpen={cadastroSuccess}>
+                <ModalHeader style={{ backgroundColor: '#198754', color: '#FFF' }}>
+                    <strong>CADASTRO EFETUADO</strong>
+                </ModalHeader>
+                <ModalBody>
+                    Sócio cadastrado
+
+                    <ModalFooter className='mt-3 justify-content-center'>
+                        <button className='btn btn-primary' onClick={() => {
+                            setCadastroSuccess(false)
+                            window.location.href = "/"
+                        }}>
+                            OK
+                        </button>
+                    </ModalFooter>
+                </ModalBody>
+
+            </Modal>
+
+            <Modal fade={false} fullscreen isOpen={cadastroFail}>
+                <ModalHeader style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
+                    <strong>FALHA NO CADASTRO</strong>
+                </ModalHeader>
+                <ModalBody>
+                    <p>- Verifique se o nome foi preenchido corretamente.</p>
+                    <p>- Verifique se a pessoa está visível nas fotos enviadas.</p>
+
+                    <div className='container-fluid'>
+                        <div className='row'>
+                            <ImagensModalDeErro></ImagensModalDeErro>
+                        </div>
+                    </div>
+
+                    <ModalFooter className='mt-3 justify-content-center'>
+                        <button className='btn btn-primary' onClick={() => { setCadastroFail(false) }}>
+                            OK
+                        </button>
+                    </ModalFooter>
+                </ModalBody>
+
+            </Modal>
 
 
 
