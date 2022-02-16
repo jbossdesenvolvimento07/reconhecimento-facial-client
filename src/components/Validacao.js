@@ -151,7 +151,7 @@ function Validacao() {
 
             </Modal>
 
-            <NavLink className='btn btn-sm btn-outline-danger my-5' to="/">CANCELAR VALIDACAO</NavLink>
+            <NavLink className='btn btn-sm btn-outline-danger my-5' to="/">CANCELAR VALIDAÇÃO</NavLink>
         </div>
     )
 }

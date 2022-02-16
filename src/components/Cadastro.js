@@ -23,6 +23,7 @@ function Cadastro() {
                 <div className='my-3'>
                     <label className="form-label mb-0">CPF</label>
                     <input type="text" className="form-control" id="inpCPF" />
+                    <label id='erroCPF' className='d-none' style={{color: '#dc3545'}}>Campo obrigatório</label>
                 </div>
                 <button className="btn btn-success" id="btnSend" onClick={handleEtapa1}>CONTINUAR</button>
             </>
@@ -30,10 +31,15 @@ function Cadastro() {
     }
 
     function handleEtapa1() {
+        const inpCPF = document.getElementById('inpCPF')
 
-        setCpf(document.getElementById('inpCPF').value)
+        if(inpCPF.value === ''){
+            document.getElementById('erroCPF').classList.remove('d-none')
+        }else{
+            setCpf(inpCPF.value)
 
-        setEtapaCad(2)
+            setEtapaCad(2)
+        }
 
     }
 
