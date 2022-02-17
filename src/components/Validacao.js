@@ -13,6 +13,8 @@ function Validacao() {
 
     const [imageSuccess, setImageSuccess] = React.useState('')
 
+    const [dadosSocio, setDadosSocio] = React.useState({})
+
 
     function TelaCarregamento(props) {
         return (
@@ -67,7 +69,7 @@ function Validacao() {
 
         console.log(res)
 
-        switch (res.data[1][0]._label) {
+        switch (res.data[2][0]._label) {
             case 'unknown':
                 setValFail(true)
                 break;
@@ -79,6 +81,7 @@ function Validacao() {
             default:
                 setValSuccess(true)
                 setImageSuccess(res.data[0][0])
+                setDadosSocio(res.data[1][0])
                 break;
         }
 
@@ -103,8 +106,14 @@ function Validacao() {
                     <strong>ENTRADA LIBERADA</strong>
                 </ModalHeader>
                 <ModalBody>
-                    <p><strong>SÓCIO: </strong> {""}</p>
-                    <p><strong>CPF: </strong> {""}</p>
+                    <div className="card" >
+                        <div className="card-body">
+                            <h5 className="card-title">{dadosSocio.NOME}</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">CPF: {dadosSocio.CPF}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Código: {dadosSocio.CODIGO}</h6>
+            
+                        </div>
+                    </div>
 
                     <div className="card mt-4 mx-5">
                         <img src={imageSuccess} className="card-img-top shadow rounded" alt='' />

@@ -9,6 +9,8 @@ function Cadastro() {
     const [etapaCad, setEtapaCad] = React.useState(1)
     const [carregando, setCarregando] = React.useState(false)
 
+    const [dadosSocio, setDadosSocio] = React.useState({})
+
     const [cadastroSuccess, setCadastroSuccess] = React.useState(false)
     const [cadastroFail, setCadastroFail] = React.useState(false)
     const [cadastroFailImages, setCadastroFailImages] = React.useState([])
@@ -22,9 +24,16 @@ function Cadastro() {
             <>
                 <div className='my-3'>
                     <label className="form-label mb-0">CPF</label>
-                    <input type="text" className="form-control" id="inpCPF" />
-                    <label id='erroCPF' className='d-none' style={{color: '#dc3545'}}>Campo obrigatório</label>
+                    <input type="text" className="form-control" id="inpCPF" maxLength={11} />
+                    <label id='erroCPF' className='d-none' style={{ color: '#dc3545' }}>Campo obrigatório</label>
                 </div>
+
+                <div id='alertCPF' className="alert alert-warning d-none" role="alert">
+                    <h4 className="alert-heading">CPF NÃO ENCONTRADO!</h4>
+                    <hr />
+                    <p className="mb-0">Verifique se o CPF foi digitado corretamente.</p>
+                </div>
+
                 <button className="btn btn-success" id="btnSend" onClick={handleEtapa1}>CONTINUAR</button>
             </>
         )
@@ -33,17 +42,61 @@ function Cadastro() {
     function handleEtapa1() {
         const inpCPF = document.getElementById('inpCPF')
 
-        if(inpCPF.value === ''){
+        if (inpCPF.value === '') {
             document.getElementById('erroCPF').classList.remove('d-none')
-        }else{
+        } else {
             setCpf(inpCPF.value)
 
-            setEtapaCad(2)
+            axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": inpCPF.value })
+                .then((res) => {
+
+                    if (res.data) {
+
+                        setDadosSocio(res.data)
+                        setEtapaCad(2)
+
+                    } else {
+
+                        document.getElementById('alertCPF').classList.remove('d-none')
+
+                    }
+
+                })
+
         }
 
     }
 
     function Etapa2() {
+
+        console.log(dadosSocio)
+
+        return (
+            <>
+                <div className="card" >
+                    <div className="card-body">
+                        <h5 className="card-title">{dadosSocio.NOME}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">CPF: {dadosSocio.CPF}</h6>
+                        <h6 className="card-subtitle mb-5 text-muted">Código: {dadosSocio.CODIGO}</h6>
+                        <button className="btn btn-outline-danger me-5" id="btnSend" onClick={() => { handleEtapa2('R') }}>RETORNAR</button>
+                        <button className="btn btn-success ms-5" id="btnSend" onClick={() => { handleEtapa2('C') }}>CONTINUAR</button>
+                    </div>
+                </div>
+
+            </>
+        )
+    }
+
+    function handleEtapa2(escolha) {
+        if (escolha === 'R') {
+            setEtapaCad(1)
+        } else {
+            setEtapaCad(3)
+        }
+
+    }
+
+    function Etapa3() {
         return (
             <>
                 <div id='cardFoto1' className="mb-3 mx-5">
@@ -170,7 +223,7 @@ function Cadastro() {
                 } else {
                     setCarregando(true)
 
-                    axios.post('http://jboss.ddns.me:6061/cadastrar', { "label": cpf, "dataUrls": dataUrls })
+                    axios.post('http://jboss.ddns.me:6061/cadastrar', { "label": dadosSocio.CODIGO, "dataUrls": dataUrls })
                         .then(res => handleCadastro(res))
                 }
 
@@ -211,9 +264,9 @@ function Cadastro() {
 
             {etapaCad === 1 ? <Etapa1></Etapa1> : <></>}
 
-            <>
-                {etapaCad === 2 ? <Etapa2></Etapa2> : <></>}
-            </>
+            {etapaCad === 2 ? <Etapa2></Etapa2> : <></>}
+
+            {etapaCad === 3 ? <Etapa3></Etapa3> : <></>}
 
             {carregando ? <TelaCarregamento description='CADASTRANDO'></TelaCarregamento> : <></>}
 
