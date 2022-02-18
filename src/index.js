@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Home, Cadastro, Validacao } from "./components";
+import { Home, Cadastro, Validacao, Portaria } from "./components";
 
 ReactDOM.render(
   <Router>
@@ -13,10 +13,9 @@ ReactDOM.render(
       <Route path="/" element={<Home />} />
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/validacao" element={<Validacao />} />
+      <Route path="/portaria" element={<Portaria />} />
     </Routes>
-
   </Router>,
-
   document.getElementById('root')
 );
 

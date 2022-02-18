@@ -58,32 +58,30 @@ function Validacao() {
             setCarregando(true)
 
             axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl })
-                .then(res => handleValidacao(res))
+                .then(res => handleValidacao(res.data))
         }
 
     }
 
-    function handleValidacao(res) {
+    function handleValidacao(data) {
 
         setCarregando(false)
 
-        console.log(res)
-
-        switch (res.data[2][0]._label) {
-            case 'unknown':
+        console.log(data.length)
+        if(data.length > 0){
+            if(data[0].dados === 'unknown'){
                 setValFail(true)
-                break;
-
-            case 'notFound':
-                setValNotFound(true)
-                break;
-
-            default:
+            }
+            else{
                 setValSuccess(true)
-                setImageSuccess(res.data[0][0])
-                setDadosSocio(res.data[1][0])
-                break;
+                setImageSuccess(data[0].foto)
+                setDadosSocio(data[1].dados)
+            }
+
+        }else{
+            setValNotFound(true)
         }
+
 
     }
 
