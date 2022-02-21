@@ -47,6 +47,7 @@ function Cadastro() {
         } else {
             setCpf(inpCPF.value)
 
+
             axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": inpCPF.value })
                 .then((res) => {
 
@@ -60,6 +61,7 @@ function Cadastro() {
                         document.getElementById('alertCPF').classList.remove('d-none')
 
                     }
+
 
                 })
 
@@ -159,7 +161,7 @@ function Cadastro() {
                 <div class="lds-facebook">
                     <div></div> <div></div> <div></div>
                 </div>
-                {props.description}
+                CARREGANDO
             </div>
         )
 

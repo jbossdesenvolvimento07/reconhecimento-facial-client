@@ -73,3 +73,48 @@
   }
 }
 
+
+
+
+
+.cardAssociado{
+  font-size: 0.9em;
+  padding: 10px;
+}
+.card-subtitle{
+  line-height: 1.1em;
+  padding-bottom: 8px;
+}
+.inadimplente, .liberado{
+  color: #FFF;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+.inadimplente{
+  background-color: #dc3545;
+}
+.liberado{
+  background-color: #198754;
+}
+
+
+
+.cameraFeedContainer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 997;
+  display: flex;
+  transition: all 0.5s ease;
+  flex-direction: column;
+}
+.hideCameraFeed{
+  opacity: 0;
+  transform: translate(0, 100px);
+}
+.cameraFeed{
+  border-radius: 5px;
+  width: 400px;
+}

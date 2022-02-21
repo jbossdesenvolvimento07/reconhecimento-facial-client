@@ -4,6 +4,7 @@ import Webcam from "react-webcam";
 
 function Portaria() {
 
+
     const [devices, setDevices] = React.useState([]);
 
     const [sociosDetectados, setSociosDetectados] = React.useState([]);
@@ -16,15 +17,15 @@ function Portaria() {
     const handleDevices = React.useCallback(
         mediaDevices =>
             setDevices(mediaDevices.filter((device) => {
-                if (device.kind === "videoinput" && !(device.label.includes('DroidCam Source'))) {
-                    console.log(device)
-                    return device
-                }
-
-                /*if (device.label === "Iriun Webcam") {
+                /*if (device.kind === "videoinput" && !(device.label.includes('DroidCam Source'))) {
                     console.log(device)
                     return device
                 }*/
+
+                if (device.kind === "videoinput") {
+                    console.log(device)
+                    return device
+                }
 
             })),
         [setDevices]
@@ -48,27 +49,34 @@ function Portaria() {
 
     const camera1 = React.useRef(null);
     const camera2 = React.useRef(null);
+    const camera3 = React.useRef(null);
+    const camera4 = React.useRef(null);
 
     useEffect(() => {
-        setTimeout(capture, 5000)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                console.log('Enter')
+                setSociosDetectados([])
+    
+            }
+        }, false);
+    }, [])
+
+    useEffect(() => {
+        setTimeout(capture, 2000)
     }, [attConsulta]);
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            setSociosDetectados([])
-
-        }
-    }, false);
+    
 
     function capture() {
         const dataUrl1 = camera1.current.getScreenshot();
-        const dataUrl2 = camera2.current.getScreenshot();
+        //const dataUrl2 = camera2.current.getScreenshot();
 
         axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl1 })
             .then(res => handleResponse(res.data))
 
-        axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl2 })
-            .then(res => handleResponse(res.data))
+        //axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl2 })
+            //.then(res => handleResponse(res.data))
     }
 
     function handleResponse(data) {
@@ -113,14 +121,16 @@ function Portaria() {
 
         sociosDetectados.map(socio => (
             elements.push(
-                <div className='col-4' key={Math.random()}>
-                    <div className="card" >
-                        <img src={socio.foto} className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h6 className="card-title"> {socio.dados.NOME}</h6>
-                            <h6 className="card-subtitle mb-2 text-muted">CPF: {socio.dados.CPF}</h6>
-                            <h6 className="card-subtitle mb-2 text-muted">Código: {socio.dados.motivoInadimplencia}</h6>
+                <div className='col-2' key={Math.random()}>
+                    <div className="card mb-3">
+                        <img src={socio.foto} className="card-img-top" alt="..." style={{ maxHeight: '30vh' }} />
+                        <div className="card-body cardAssociado">
+                            <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{socio.dados.NOME}</p>
+                            {socio.dados.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{socio.dados.NOME_TITU}</p> : <></>}
+                            <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{socio.dados.CARTEIRINHA}</p>
                         </div>
+                        {socio.dados.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
+
                     </div>
                 </div>
 
@@ -130,41 +140,45 @@ function Portaria() {
         return elements
     }
 
+
+
+
+
+
     return (
         <>
-            <div className="container-fluid" style={{ width: '100vw' }}>
+            <div className="container-fluid" style={{ maxWidth: '100vw' }}>
 
-                <div className='row'>
-                    <div className='col-4'>
-                        {/*devices.map((device, key) => (
+
+                <div className='cameraFeedContainer' id='cameraFeedContainer'>
+
+                    <div className='ms-auto'>
+                        <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: '4e6c8afe899135bdc2496ddc7c841fdeb852a4b1bee87f617e48aa1cd1b2a3d1' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 me-3 shadow' />
+                        {/*<Webcam ref={camera2} audio={false} videoConstraints={{ deviceId: '88840af44e21a00b34e9784d3df911559b2e447f430f96289e3be69bbc8f97ed' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 shadow' />
+                    </div>
+
+                    <div className='ms-auto'>
+                        <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: 'd06bff9ebd9bc25d032647412794bfb82a7b06fef2526e6f77f478e43bdd6020' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 shadow' />
+    <Webcam ref={camera4} audio={false} videoConstraints={{ deviceId: '' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 shadow' /> */}
+                    </div>
+
+
+
+                    {/*devices.map((device, key) => (
                             <div className='' key={device.deviceId} style={{ width: '100%' }}>
                                 <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: device.deviceId }} screenshotFormat="image/jpeg" width={'100%'} />
                                 <small className='fw-light'>{device.label || `Device ${key + 1}`}</small>
                             </div>
                         ))*/}
 
-                        <div style={{ width: '100%' }}>
-                            <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: '2fbf59c08a2f5101d7c0454c8983e6287e7cd5d93497466d87c67221caf245a5' }} screenshotFormat="image/jpeg" width={'100%'} />
-                            <small className='fw-light'>Irium</small>
-                        </div>
-
-                        <div style={{ width: '100%' }}>
-                            <Webcam ref={camera2} audio={false} videoConstraints={{ deviceId: '88840af44e21a00b34e9784d3df911559b2e447f430f96289e3be69bbc8f97ed' }} screenshotFormat="image/jpeg" width={'100%'} />
-                            <small className='fw-light'>Webcam</small>
-                        </div>
-                    </div>
-                    <div className='col-8'>
-                        <div className='container-fluid'>
-                            <div className='row'>
-                                <DisplaySociosDetectados ></DisplaySociosDetectados>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-
                 </div>
+
+                <div className='container-fluid p-3'>
+                    <div className='row'>
+                        <DisplaySociosDetectados ></DisplaySociosDetectados>
+                    </div>
+                </div>
+
 
 
 
