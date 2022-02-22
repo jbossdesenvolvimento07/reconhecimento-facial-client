@@ -5,17 +5,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Home, Cadastro, Validacao, Portaria } from "./components";
+import { Home, Cadastro, Validacao, Portaria, Configuracao, Header } from "./components";
 
 ReactDOM.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/validacao" element={<Validacao />} />
-      <Route path="/portaria" element={<Portaria />} />
-    </Routes>
-  </Router>,
+  <>
+    <Router>
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/validacao" element={<Validacao />} />
+        <Route path="/portaria" element={<Portaria />} />
+        <Route path="/configuracao" element={<Configuracao />} />
+      </Routes>
+    </Router>
+  </>,
   document.getElementById('root')
 );
 

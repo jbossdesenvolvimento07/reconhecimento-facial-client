@@ -1,4 +1,14 @@
 
+.NavbarLink{
+  text-decoration: none;
+  margin-right: 10px;
+  color: rgb(220, 220, 220);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+
+
 .inputFile {
 	width: 0.1px;
 	height: 0.1px;
@@ -117,4 +127,16 @@
 .cameraFeed{
   border-radius: 5px;
   width: 400px;
+}
+
+
+
+.toastCustom{
+  transition: 0.5s all ease;
+  position: fixed;
+  bottom: 20px;
+}
+.toastHide{
+  opacity: 0;
+  transform: translate(0, 50%);
 }

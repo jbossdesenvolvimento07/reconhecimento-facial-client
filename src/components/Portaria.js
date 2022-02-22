@@ -105,7 +105,7 @@ function Portaria() {
 
         sociosDetectados.map(s => {
             if (s.dados.CODIGO === codAssociado) {
-                console.log('igual')
+                console.log(codAssociado + ' já detectado')
                 jaDetectado = true
             }
 
@@ -123,7 +123,7 @@ function Portaria() {
             elements.push(
                 <div className='col-2' key={Math.random()}>
                     <div className="card mb-3">
-                        <img src={socio.foto} className="card-img-top" alt="..." style={{ maxHeight: '30vh' }} />
+                        <img src={socio.foto} className="" alt="..." style={{ maxHeight: '30vh' }} />
                         <div className="card-body cardAssociado">
                             <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{socio.dados.NOME}</p>
                             {socio.dados.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{socio.dados.NOME_TITU}</p> : <></>}

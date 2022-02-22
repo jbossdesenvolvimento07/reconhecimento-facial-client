@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import axios from 'axios'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Toast, ToastHeader, ToastBody } from 'reactstrap';
 
 
 function Cadastro() {
@@ -28,11 +28,28 @@ function Cadastro() {
                     <label id='erroCPF' className='d-none' style={{ color: '#dc3545' }}>Campo obrigatório</label>
                 </div>
 
-                <div id='alertCPF' className="alert alert-warning d-none" role="alert">
-                    <h4 className="alert-heading">CPF NÃO ENCONTRADO!</h4>
-                    <hr />
-                    <p className="mb-0">Verifique se o CPF foi digitado corretamente.</p>
-                </div>
+                <Toast id='alertCPF' className='toastCustom toastHide'>
+                    <ToastHeader icon="warning">
+                        CPF NÃO ENCONTRADO!
+                    </ToastHeader>
+                    <ToastBody>
+                        Verifique se o CPF foi digitado corretamente.
+                    </ToastBody>
+                </Toast>
+
+                <Toast id='alertCadastrado' className='toastCustom toastHide' >
+                    <ToastHeader icon="danger">
+                        ASSOCIADO JÁ CADASTRADO!
+                    </ToastHeader>
+                    <ToastBody>
+                        O CPF inserido pertence a um associado já cadastrado na plataforma de reconhecimento facial. <br/>
+                        <strong>Para recadastrar o associado apague o cadastro atual.</strong>
+                        <div className='w-100 d-flex'>
+                            <button className='btn btn-danger btn-sm mx-auto'>REMOVER CADASTRO</button>
+                        </div>
+                        
+                    </ToastBody>
+                </Toast>
 
                 <button className="btn btn-success" id="btnSend" onClick={handleEtapa1}>CONTINUAR</button>
             </>
@@ -53,12 +70,18 @@ function Cadastro() {
 
                     if (res.data) {
 
-                        setDadosSocio(res.data)
-                        setEtapaCad(2)
+                        if (res.data.statusRF === 'A') {
+                            document.getElementById('alertCadastrado').classList.remove('toastHide')
+                        } else {
+                            setDadosSocio(res.data)
+                            setEtapaCad(2)
+                        }
+
+
 
                     } else {
 
-                        document.getElementById('alertCPF').classList.remove('d-none')
+                        document.getElementById('alertCPF').classList.remove('toastHide')
 
                     }
 
@@ -131,7 +154,7 @@ function Cadastro() {
                 </div>
 
 
-                <div id='cardFoto4' className="mb-3 mx-5 d-none">
+                {/*<div id='cardFoto4' className="mb-3 mx-5 d-none">
                     <h4 className='mt-2 mx-auto'>FOTO CIMA</h4>
                     <img src='assets/cima.png' className="card-img-top shadow" alt='imgMissing' />
                     <div className="card-body text-start">
@@ -148,9 +171,8 @@ function Cadastro() {
                         <input id='fileInp5' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage(5) }}></input>
                         <label htmlFor='fileInp5' id="label5" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                     </div>
-                </div>
+                </div>*/}
 
-                <button className="btn btn-success d-none" id="btnCadastrar" onClick={() => { }}>CADASTRAR</button>
             </>
         )
     }
@@ -216,7 +238,7 @@ function Cadastro() {
                 setDataUrls(dataUlrsTemp)
 
 
-                if (nInput !== 5) {
+                if (nInput !== 3) {
                     const cardAtual = document.getElementById(`cardFoto${nInput}`)
                     const cardNext = document.getElementById(`cardFoto${nInput + 1}`)
 
@@ -262,7 +284,7 @@ function Cadastro() {
 
 
     return (
-        <div className='container-fluid d-flex flex-column justify-content-center align-items-center' style={{ width: '100vw', minHeight: '100vh' }}>
+        <div className='container-fluid d-flex flex-column align-items-center' style={{ marginTop: '80px' }}>
 
             {etapaCad === 1 ? <Etapa1></Etapa1> : <></>}
 
