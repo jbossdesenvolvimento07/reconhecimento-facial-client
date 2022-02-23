@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Webcam from "react-webcam";
 
+import ReactPlayer from 'react-player'
+
 function Portaria() {
 
 
@@ -60,15 +62,22 @@ function Portaria() {
     
             }
         }, false);
+
+        
     }, [])
 
+
+    
     useEffect(() => {
         setTimeout(capture, 2000)
     }, [attConsulta]);
 
+
     
 
     function capture() {
+
+        console.log('Foto')
         const dataUrl1 = camera1.current.getScreenshot();
         //const dataUrl2 = camera2.current.getScreenshot();
 
@@ -147,10 +156,16 @@ function Portaria() {
 
     return (
         <>
+            <div className='pictureTimer' id='pictureTimer'></div>
+
             <div className="container-fluid" style={{ maxWidth: '100vw' }}>
+
+            <ReactPlayer url='https://youtu.be/KZFWtAIKaCc' controls={false} playing={true} muted/>
 
 
                 <div className='cameraFeedContainer' id='cameraFeedContainer'>
+
+                    
 
                     <div className='ms-auto'>
                         <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: '4e6c8afe899135bdc2496ddc7c841fdeb852a4b1bee87f617e48aa1cd1b2a3d1' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 me-3 shadow' />

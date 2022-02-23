@@ -16,7 +16,7 @@ function Cadastro() {
     const [cadastroFailImages, setCadastroFailImages] = React.useState([])
 
     const [cpf, setCpf] = React.useState('')
-    const [dataUrls, setDataUrls] = React.useState(['', '', '', '', ''])
+    const [dataUrls, setDataUrls] = React.useState(['', '', ''])
 
 
     function Etapa1() {
@@ -45,7 +45,7 @@ function Cadastro() {
                         O CPF inserido pertence a um associado já cadastrado na plataforma de reconhecimento facial. <br/>
                         <strong>Para recadastrar o associado apague o cadastro atual.</strong>
                         <div className='w-100 d-flex'>
-                            <button className='btn btn-danger btn-sm mx-auto'>REMOVER CADASTRO</button>
+                            <a className='btn btn-danger btn-sm mx-auto' href='/remocao'>REMOVER CADASTRO</a>
                         </div>
                         
                     </ToastBody>
@@ -284,7 +284,12 @@ function Cadastro() {
 
 
     return (
-        <div className='container-fluid d-flex flex-column align-items-center' style={{ marginTop: '80px' }}>
+        <div className='container-fluid d-flex flex-column align-items-center' style={{ marginTop: '70px' }}>
+
+            <div className='titulo w-100 mb-4'>
+                <h2 className='mb-0 fw-bolder'>CADASTRO</h2>
+                <p className='text-muted border-bottom mb-0'>Registre um associado na plataforma de reconhecimento facial.</p>
+            </div>
 
             {etapaCad === 1 ? <Etapa1></Etapa1> : <></>}
 
@@ -307,7 +312,7 @@ function Cadastro() {
                             setCadastroSuccess(false)
                             window.location.href = "/"
                         }}>
-                            OK
+                            CONFIRMAR
                         </button>
                     </ModalFooter>
                 </ModalBody>
@@ -330,7 +335,7 @@ function Cadastro() {
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setCadastroFail(false) }}>
-                            OK
+                            CONFIRMAR
                         </button>
                     </ModalFooter>
                 </ModalBody>
@@ -339,7 +344,7 @@ function Cadastro() {
 
 
 
-            <NavLink className='btn btn-sm btn-outline-danger my-5' to="/">CANCELAR CADASTRO</NavLink>
+            <NavLink className='btnCancelar shadow' to="/"><i class="bi bi-x"></i></NavLink>
         </div>
     )
 }

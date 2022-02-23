@@ -32,19 +32,40 @@
   border-radius: 5px;
   font-weight: 600;
 }
+.btnCancelar{
+  line-height: 1em;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #dc3545;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #FFF;
+  font-size: 3em;
+}
 
 
 
 
 
 .telaCarregamento{
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  /*width: 100vw;
+  height: 100vh;*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.8);
   color: #FFF;
   font-weight: 700;
   font-size: 1.2em;
+  z-index: 999999;
 }
 .lds-facebook {
   display: inline-block;
@@ -127,6 +148,31 @@
 .cameraFeed{
   border-radius: 5px;
   width: 400px;
+}
+.pictureTimer{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 10px;
+  background: #dc3545;
+  animation: scale-up-hor-left 2.3s linear infinite both;
+}
+@keyframes scale-up-hor-left {
+
+  0% {
+    opacity: 0;
+    transform: scaleX(1);
+    transform-origin: 0% 0%;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: 0% 0%;
+  }
 }
 
 

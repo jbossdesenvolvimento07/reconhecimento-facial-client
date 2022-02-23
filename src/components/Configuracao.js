@@ -52,7 +52,13 @@ function Configuracao() {
     }
 
     return (
-        <div className='container-fluid d-flex flex-column align-items-center pt-5' style={{ width: '100vw', minHeight: '100vh' }} >
+        <div className='container-fluid d-flex flex-column align-items-center' style={{ marginTop: '70px' }} >
+
+            <div className='titulo w-100 mb-4'>
+                <h2 className='mb-0 fw-bolder'>CONFIGURAÇÕES</h2>
+                <p className='text-muted border-bottom mb-0'>Altere as configurações de reconhecimento.</p>
+            </div>
+            
             <div className='mb-3'>
                 <label htmlFor="customRange3" className="form-label w-100">Distância aceitável<strong className='float-end'>{(range * 100).toFixed(0)}%</strong></label>
                 <input ref={rangeInp} value={range} type="range" className="form-range" min={0.1} max={0.9} step="0.05" id="rangeInp" onChange={updateRange} />

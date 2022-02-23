@@ -19,7 +19,7 @@ function Validacao() {
     function TelaCarregamento(props) {
         return (
             <div className='telaCarregamento d-flex flex-column align-items-center justify-content-center'>
-                <div class="lds-facebook">
+                <div className="lds-facebook">
                     <div></div> <div></div> <div></div>
                 </div>
                 {props.description}
@@ -67,7 +67,7 @@ function Validacao() {
 
         setCarregando(false)
 
-        console.log(data.length)
+        console.log(data)
         if(data.length > 0){
             if(data[0].dados === 'unknown'){
                 setValFail(true)
@@ -75,7 +75,7 @@ function Validacao() {
             else{
                 setValSuccess(true)
                 setImageSuccess(data[0].foto)
-                setDadosSocio(data[1].dados)
+                setDadosSocio(data[0].dados)
             }
 
         }else{
@@ -87,30 +87,37 @@ function Validacao() {
 
 
     return (
-        <div className='container-fluid d-flex flex-column justify-content-center align-items-center' style={{ width: '100vw', minHeight: '100vh' }}>
+        <div className='container-fluid d-flex flex-column align-items-center' style={{ marginTop: '70px' }}>
+
+            <div className='titulo w-100 mb-4'>
+                <h2 className='mb-0 fw-bolder'>VALIDAÇÃO</h2>
+                <p className='text-muted border-bottom mb-0'>Tire a foto de um associado para verificar sua identidade.</p>
+            </div>
+            
+
             <div id='cardFoto1' className="mb-3 mx-5">
                 <h4 className='mt-2 mx-auto'>FOTO FRONTAL</h4>
                 <img src='assets/frente.png' className="card-img-top shadow" alt='imgMissing' />
                 <div className="card-body text-start">
                     <input id='fileInp1' className="inputFile my-3" type="file" accept="image/*" capture="camera" onChange={() => { loadImage() }} ></input>
-                    <label htmlFor='fileInp1' id="label1" className='labelFileInp'> ANEXAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
+                    <label htmlFor='fileInp1' id="label1" className='labelFileInp'> TIRAR FOTO <i className="ms-2 bi-camera-fill fs-1"></i> </label>
                 </div>
             </div>
+
+            
 
             {carregando ? <TelaCarregamento description='VALIDANDO'></TelaCarregamento> : <></>}
 
             <Modal fade={false} isOpen={valSuccess} fullscreen>
-                <ModalHeader style={{ backgroundColor: '#198754', color: '#FFF' }}>
-                    <strong>ENTRADA LIBERADA</strong>
-                </ModalHeader>
                 <ModalBody>
-                    <div className="card" >
-                        <div className="card-body">
-                            <h5 className="card-title">{dadosSocio.NOME}</h5>
-                            <h6 className="card-subtitle mb-2 text-muted">CPF: {dadosSocio.CPF}</h6>
-                            <h6 className="card-subtitle mb-2 text-muted">Código: {dadosSocio.CODIGO}</h6>
-            
+                    <div className="card mb-3">
+                        <div className="card-body cardAssociado">
+                            <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{dadosSocio.NOME}</p>
+                            {dadosSocio.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{dadosSocio.NOME_TITU}</p> : <></>}
+                            <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{dadosSocio.CARTEIRINHA}</p>
                         </div>
+                        {dadosSocio.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
+
                     </div>
 
                     <div className="card mt-4 mx-5">
@@ -119,7 +126,7 @@ function Validacao() {
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setValSuccess(false) }}>
-                            OK
+                            CONFIRMAR
                         </button>
                     </ModalFooter>
                 </ModalBody>
@@ -128,14 +135,14 @@ function Validacao() {
 
             <Modal fade={false} isOpen={valFail} fullscreen>
                 <ModalHeader style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
-                    <strong>ENTRADA BLOQUEADA</strong>
+                    <strong>ASSOCIADO NÃO RECONHECIDO</strong>
                 </ModalHeader>
                 <ModalBody>
-                    Sócio não identificado
+                    O rosto do associado não consta no aplicativo de reconhecimento facial, verifique se o associado possui cadastro no sistema.
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setValFail(false) }}>
-                            OK
+                            CONFIRMAR
                         </button>
                     </ModalFooter>
                 </ModalBody>
@@ -151,14 +158,14 @@ function Validacao() {
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setValNotFound(false) }}>
-                            OK
+                            CONFIRMAR
                         </button>
                     </ModalFooter>
                 </ModalBody>
 
             </Modal>
 
-            <NavLink className='btn btn-sm btn-outline-danger my-5' to="/">CANCELAR VALIDAÇÃO</NavLink>
+            <NavLink className='btnCancelar shadow' to="/"><i class="bi bi-x"></i></NavLink>
         </div>
     )
 }
