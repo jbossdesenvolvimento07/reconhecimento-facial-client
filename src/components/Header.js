@@ -20,6 +20,7 @@ function Header() {
     
                 <Collapse navbar isOpen={collapse} >
                     <Nav navbar className='ps-3'>
+                        <NavLink to="/consulta" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-card-list me-2"></i>Consulta </NavLink>
                         <NavLink to="/validacao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-check-square me-2"></i>Validação </NavLink>
                         <NavLink to="/cadastro" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-plus-square me-2"></i>Cadastro </NavLink>
                         <NavLink to="/remocao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-dash-square me-2"></i>Remoção </NavLink>
