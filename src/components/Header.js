@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavLink, useLocation } from "react-router-dom";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav} from 'reactstrap';
 
 function Header() {
 
@@ -12,7 +12,7 @@ function Header() {
         return <></>
     }else{
         return (
-            <Navbar color="dark" dark expand="md" className='fixed-top' >
+            <Navbar color="dark" dark expand="md" className='fixed-top' id='navbar'>
                 <NavbarBrand className="me-auto" href="/" >
                     Reconhecimento Facial CC 
                 </NavbarBrand>
@@ -20,11 +20,11 @@ function Header() {
     
                 <Collapse navbar isOpen={collapse} >
                     <Nav navbar className='ps-3'>
-                        <NavLink to="/consulta" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-card-list me-2"></i>Consulta </NavLink>
+                        <NavLink to="/consulta" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-filter-square me-2"></i>Consulta </NavLink>
                         <NavLink to="/validacao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-check-square me-2"></i>Validação </NavLink>
                         <NavLink to="/cadastro" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-plus-square me-2"></i>Cadastro </NavLink>
                         <NavLink to="/remocao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-dash-square me-2"></i>Remoção </NavLink>
-                        <NavLink to="/configuracao" className="NavbarLink mt-4 mb-2 m-md-0" onClick={() => {setCollapse(false)}}><i className="bi bi-gear me-2"></i>Configuração </NavLink>
+                        <NavLink to="/configuracao" className="NavbarLink mt-4 mb-2 m-md-0" onClick={() => {setCollapse(false)}}><i className="bi bi-gear me-2"></i>Configurações </NavLink>
                     </Nav>
                 </Collapse>
             </Navbar>

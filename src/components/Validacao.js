@@ -91,7 +91,7 @@ function Validacao() {
 
             <div className='titulo w-100 mb-4'>
                 <h2 className='mb-0 fw-bolder'>VALIDAÇÃO</h2>
-                <p className='text-muted border-bottom mb-0'>Tire a foto de um associado para verificar sua identidade.</p>
+                <p className='text-muted border-bottom mb-0'>Tire a foto do associado para verificar sua identidade.</p>
             </div>
             
 
@@ -165,8 +165,10 @@ function Validacao() {
 
             </Modal>
 
-            <NavLink className='btnCancelar shadow' to="/"><i class="bi bi-x"></i></NavLink>
+            <NavLink className='btnCancelar shadow' to="/"><i className="bi bi-x"></i></NavLink>
         </div>
+
+        
     )
 }
 

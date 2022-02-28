@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import Webcam from "react-webcam";
 
-import ReactPlayer from 'react-player'
 
 function Portaria() {
 
@@ -112,7 +111,7 @@ function Portaria() {
     function verificaAssociadoJaDetectado(codAssociado) {
         let jaDetectado = false
 
-        sociosDetectados.map(s => {
+        sociosDetectados.forEach(s => {
             if (s.dados.CODIGO === codAssociado) {
                 console.log(codAssociado + ' já detectado')
                 jaDetectado = true
@@ -128,7 +127,7 @@ function Portaria() {
 
         let elements = []
 
-        sociosDetectados.map(socio => (
+        sociosDetectados.forEach(socio => (
             elements.push(
                 <div className='col-2' key={Math.random()}>
                     <div className="card mb-3">

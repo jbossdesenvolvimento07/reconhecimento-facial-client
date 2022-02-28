@@ -23,8 +23,9 @@ function Cadastro() {
         return (
             <>
                 <div className='my-3'>
+
                     <label className="form-label mb-0">CPF</label>
-                    <input type="text" className="form-control" id="inpCPF" maxLength={11} />
+                    <input type="number" className="form-control" id="inpCPF" />
                     <label id='erroCPF' className='d-none' style={{ color: '#dc3545' }}>Campo obrigatório</label>
                 </div>
 
@@ -42,12 +43,12 @@ function Cadastro() {
                         ASSOCIADO JÁ CADASTRADO!
                     </ToastHeader>
                     <ToastBody>
-                        O CPF inserido pertence a um associado já cadastrado na plataforma de reconhecimento facial. <br/>
+                        O CPF inserido pertence a um associado já cadastrado na plataforma de reconhecimento facial. <br />
                         <strong>Para recadastrar o associado apague o cadastro atual.</strong>
                         <div className='w-100 d-flex'>
                             <a className='btn btn-danger btn-sm mx-auto' href='/remocao'>REMOVER CADASTRO</a>
                         </div>
-                        
+
                     </ToastBody>
                 </Toast>
 
@@ -57,6 +58,7 @@ function Cadastro() {
     }
 
     function handleEtapa1() {
+        console.log(document.getElementById('inpCPF').value)
         const inpCPF = document.getElementById('inpCPF')
 
         if (inpCPF.value === '') {
@@ -65,7 +67,7 @@ function Cadastro() {
             setCpf(inpCPF.value)
 
 
-            axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": inpCPF.value })
+            axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": cpf })
                 .then((res) => {
 
                     if (res.data) {
@@ -98,7 +100,23 @@ function Cadastro() {
 
         return (
             <>
-                <div className="card" >
+                <div className="card">
+                    <div className="card-body">
+                        <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{dadosSocio.NOME}</p>
+                        {dadosSocio.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{dadosSocio.NOME_TITU}</p> : <></>}
+                        <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{dadosSocio.CARTEIRINHA}</p>
+                    </div>
+                    {dadosSocio.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <></>}
+
+                    <div className='w-100 d-flex p-2'>
+                        <button className="btn btn-outline-danger me-5" onClick={() => { handleEtapa2('R') }}>RETORNAR</button>
+                        <button className="btn btn-success ms-5" onClick={() => { handleEtapa2('C') }}>CONTINUAR</button>
+
+                    </div>
+
+                </div>
+
+                {/*<div className="card" >
                     <div className="card-body">
                         <h5 className="card-title">{dadosSocio.NOME}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">CPF: {dadosSocio.CPF}</h6>
@@ -106,7 +124,7 @@ function Cadastro() {
                         <button className="btn btn-outline-danger me-5" id="btnSend" onClick={() => { handleEtapa2('R') }}>RETORNAR</button>
                         <button className="btn btn-success ms-5" id="btnSend" onClick={() => { handleEtapa2('C') }}>CONTINUAR</button>
                     </div>
-                </div>
+                </div>*/}
 
             </>
         )
@@ -288,7 +306,7 @@ function Cadastro() {
 
             <div className='titulo w-100 mb-4'>
                 <h2 className='mb-0 fw-bolder'>CADASTRO</h2>
-                <p className='text-muted border-bottom mb-0'>Registre um associado na plataforma de reconhecimento facial.</p>
+                <p className='text-muted border-bottom mb-0'>Insira o CPF do associado e valide sua identidade para realizar o cadastro.</p>
             </div>
 
             {etapaCad === 1 ? <Etapa1></Etapa1> : <></>}
@@ -344,7 +362,7 @@ function Cadastro() {
 
 
 
-            <NavLink className='btnCancelar shadow' to="/"><i class="bi bi-x"></i></NavLink>
+            <NavLink className='btnCancelar shadow' to="/"><i className="bi bi-x"></i></NavLink>
         </div>
     )
 }

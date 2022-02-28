@@ -16,7 +16,7 @@ function Remocao() {
             <>
                 <div className='my-3'>
                     <label className="form-label mb-0">CPF</label>
-                    <input type="text" className="form-control" id="inpCPF" maxLength={11} />
+                    <input type="number" className="form-control" id="inpCPF" maxLength={11} />
                     <label id='erroCPF' className='d-none' style={{ color: '#dc3545' }}>Campo obrigatório</label>
                 </div>
 
@@ -150,6 +150,8 @@ function Remocao() {
                 </ModalBody>
 
             </Modal>
+
+            <NavLink className='btnCancelar shadow' to="/"><i className="bi bi-x"></i></NavLink>
         </div>
     )
 }
