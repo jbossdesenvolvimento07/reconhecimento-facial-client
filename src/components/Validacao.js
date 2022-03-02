@@ -15,6 +15,8 @@ function Validacao() {
 
     const [dadosSocio, setDadosSocio] = React.useState({})
 
+    const [sociosDetectados, setSociosDetectados] = React.useState([]);
+
 
     function TelaCarregamento(props) {
         return (
@@ -67,22 +69,65 @@ function Validacao() {
 
         setCarregando(false)
 
-        console.log(data)
-        if(data.length > 0){
-            if(data[0].dados === 'unknown'){
+        /*console.log(data)
+
+        if (data.length > 0) {
+            if (data[0].dados === 'unknown') {
                 setValFail(true)
             }
-            else{
+            else {
                 setValSuccess(true)
                 setImageSuccess(data[0].foto)
                 setDadosSocio(data[0].dados)
             }
 
-        }else{
+        } else {
+            setValNotFound(true)
+        }*/
+
+        console.log(data)
+
+        if (data.length > 0) {
+            setSociosDetectados(data)
+            setValSuccess(true)
+
+        } else {
             setValNotFound(true)
         }
 
 
+    }
+
+    function DisplaySociosDetectados() {
+        const elements = []
+
+        sociosDetectados.forEach(socio => {
+
+            if (socio.dados !== 'unknown') {
+
+                elements.push(
+                    <div className="card mb-3" key={socio.CODIGO}>
+                        <div className="row g-0">
+                            <div className="col-4 d-flex">
+                                <img src={socio.foto} className="img-fluid rounded-start my-auto" alt='' />
+                            </div>
+                            <div className="col-8 d-flex flex-column">
+                                <div className="card-body py-3 cardAssociado">
+                                    <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{socio.dados.NOME}</p>
+                                    {socio.dados.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{socio.dados.NOME_TITU}</p> : <></>}
+                                    <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{socio.dados.CARTEIRINHA}</p>
+                                </div>
+                                {socio.dados.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1 mt-auto'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
+                            </div>
+                        </div>
+                    </div>
+                )
+                
+            }
+
+        });
+
+        return elements
     }
 
 
@@ -93,7 +138,7 @@ function Validacao() {
                 <h2 className='mb-0 fw-bolder'>VALIDAÇÃO</h2>
                 <p className='text-muted border-bottom mb-0'>Tire a foto do associado para verificar sua identidade.</p>
             </div>
-            
+
 
             <div id='cardFoto1' className="mb-3 mx-5">
                 <h4 className='mt-2 mx-auto'>FOTO FRONTAL</h4>
@@ -104,14 +149,14 @@ function Validacao() {
                 </div>
             </div>
 
-            
+
 
             {carregando ? <TelaCarregamento description='VALIDANDO'></TelaCarregamento> : <></>}
 
             <Modal fade={false} isOpen={valSuccess} fullscreen>
                 <ModalBody>
-                    <div className="card mb-3">
-                        <div className="card-body cardAssociado">
+                    {/*<div className="card mb-3 d-flex">
+                        <div className="card-body cardAssociado" style={{width: '60%'}}>
                             <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{dadosSocio.NOME}</p>
                             {dadosSocio.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{dadosSocio.NOME_TITU}</p> : <></>}
                             <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{dadosSocio.CARTEIRINHA}</p>
@@ -122,7 +167,9 @@ function Validacao() {
 
                     <div className="card mt-4 mx-5">
                         <img src={imageSuccess} className="card-img-top shadow rounded" alt='' />
-                    </div>
+                    </div>*/}
+
+                    <DisplaySociosDetectados></DisplaySociosDetectados>
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setValSuccess(false) }}>
@@ -168,7 +215,7 @@ function Validacao() {
             <NavLink className='btnCancelar shadow' to="/"><i className="bi bi-x"></i></NavLink>
         </div>
 
-        
+
     )
 }
 
