@@ -31,7 +31,7 @@ function Home() {
         <>
             <div id='marginHeader' style={{ width: '100vw' }}></div>
 
-            <img src="assets/banner.jpg" className='img-fluid m-0 shadow' alt="" />
+            <img src="assets/banner.jpg" className='img-fluid m-0 d-lg-none' alt="" />
 
             <div className='container d-flex flex-column justify-content-center align-items-center mt-4'>
 
