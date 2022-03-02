@@ -57,7 +57,7 @@ function Validacao() {
 
             setCarregando(true)
 
-            axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl })
+            axios.post(`${process.env.REACT_APP_ENDERECO_API}/validar`, { "dataUrl": dataUrl })
                 .then(res => handleValidacao(res.data))
         }
 

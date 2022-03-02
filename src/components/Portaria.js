@@ -80,7 +80,7 @@ function Portaria() {
         const dataUrl1 = camera1.current.getScreenshot();
         //const dataUrl2 = camera2.current.getScreenshot();
 
-        axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl1 })
+        axios.post(`${process.env.REACT_APP_ENDERECO_API}/validar`, { "dataUrl": dataUrl1 })
             .then(res => handleResponse(res.data))
 
         //axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl2 })
@@ -167,7 +167,7 @@ function Portaria() {
                     
 
                     <div className='ms-auto'>
-                        <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: 'c88c1ae4b6b89b427e33f91a6cd661c9399bec239a877ce5d2f3585582db25d5' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 me-3 shadow' />
+                        <Webcam ref={camera1} audio={false} videoConstraints={{ deviceId: process.env.REACT_APP_IDCAMERA }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 me-3 shadow' />
                         {/*<Webcam ref={camera2} audio={false} videoConstraints={{ deviceId: '88840af44e21a00b34e9784d3df911559b2e447f430f96289e3be69bbc8f97ed' }} forceScreenshotSourceSize={true} screenshotFormat="image/jpeg" className='cameraFeed m-1 shadow' />
                     </div>
 

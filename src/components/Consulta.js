@@ -44,7 +44,7 @@ function Consulta() {
                 break;
         }
 
-        axios.post('http://jboss.ddns.me:6061/getAssociados', { "filtro": filtro })
+        axios.post(`${process.env.REACT_APP_ENDERECO_API}/getAssociados`, { "filtro": filtro })
             .then((res) => {
 
                 setAssociados(res.data)

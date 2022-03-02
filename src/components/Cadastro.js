@@ -67,7 +67,7 @@ function Cadastro() {
             setCpf(inpCPF.value)
 
 
-            axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": cpf })
+            axios.post(`${process.env.REACT_APP_ENDERECO_API}/getDadosUser`, { "cpf": cpf })
                 .then((res) => {
 
                     if (res.data) {
@@ -265,7 +265,7 @@ function Cadastro() {
                 } else {
                     setCarregando(true)
 
-                    axios.post('http://jboss.ddns.me:6061/cadastrar', { "label": dadosSocio.CODIGO, "dataUrls": dataUrls })
+                    axios.post(`${process.env.REACT_APP_ENDERECO_API}/cadastrar`, { "label": dadosSocio.CODIGO, "dataUrls": dataUrls })
                         .then(res => handleCadastro(res))
                 }
 

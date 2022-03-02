@@ -42,7 +42,7 @@ function Remocao() {
             document.getElementById('erroCPF').classList.remove('d-none')
         } else {
 
-            axios.post('http://jboss.ddns.me:6061/getDadosUser', { "cpf": inpCPF.value })
+            axios.post(`${process.env.REACT_APP_ENDERECO_API}/getDadosUser`, { "cpf": inpCPF.value })
                 .then((res) => {
 
                     if (res.data && res.data.statusRF === 'A') {
@@ -89,7 +89,7 @@ function Remocao() {
         if (escolha === 'C') {
             setEtapaCad(1)
         } else {
-            axios.post('http://jboss.ddns.me:6061/remover', { "codigo": dadosSocio.CODIGO})
+            axios.post(`${process.env.REACT_APP_ENDERECO_API}/remover`, { "codigo": dadosSocio.CODIGO})
                 .then(res => handleRemocao(res))
         }
 
