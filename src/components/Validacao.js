@@ -100,32 +100,55 @@ function Validacao() {
 
     function DisplaySociosDetectados() {
         const elements = []
+        let countSocios = 0
 
         sociosDetectados.forEach(socio => {
+            if (socio.dados !== 'unknown')
+                countSocios++
+        })
 
-            if (socio.dados !== 'unknown') {
 
-                elements.push(
-                    <div className="card mb-3" key={socio.CODIGO}>
-                        <div className="row g-0">
-                            <div className="col-4 d-flex">
-                                <img src={socio.foto} className="img-fluid rounded-start my-auto" alt='' />
-                            </div>
-                            <div className="col-8 d-flex flex-column">
-                                <div className="card-body py-3 cardAssociado">
-                                    <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{socio.dados.NOME}</p>
-                                    {socio.dados.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{socio.dados.NOME_TITU}</p> : <></>}
-                                    <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{socio.dados.CARTEIRINHA}</p>
+        if (countSocios > 0) {
+            sociosDetectados.forEach(socio => {
+
+                if (socio.dados !== 'unknown') {
+
+                    elements.push(
+                        <div className="card mb-3" key={socio.CODIGO}>
+                            <div className="row g-0">
+                                <div className="col-4 d-flex">
+                                    <img src={socio.foto} className="img-fluid rounded-start my-auto" alt='' />
                                 </div>
-                                {socio.dados.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1 mt-auto'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
+                                <div className="col-8 d-flex flex-column">
+                                    <div className="card-body py-3 cardAssociado">
+                                        <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{socio.dados.NOME}</p>
+                                        {socio.dados.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{socio.dados.NOME_TITU}</p> : <></>}
+                                        <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{socio.dados.CARTEIRINHA}</p>
+                                    </div>
+                                    {socio.dados.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1 mt-auto'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )
-                
-            }
+                    )
 
-        });
+                }
+
+            });
+        } else {
+            elements.push(
+                <div>
+                    <div className="card">
+                        <div className="card-header fw-bolder" style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
+                            ASSOCIADO NÃO RECONHECIDO
+                        </div>
+                        <div className="card-body">
+                            <p className="card-text">O rosto do associado não consta no aplicativo de reconhecimento facial, verifique se o associado possui cadastro no sistema.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
         return elements
     }

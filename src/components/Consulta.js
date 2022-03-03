@@ -7,7 +7,7 @@ function Consulta() {
     const [associados, setAssociados] = React.useState([])
     const [tipoFiltro, setTipoFiltro] = React.useState('nome')
 
-    function clearInp(){
+    function clearInp() {
         const inpValor = document.getElementById('inpValor')
         inpValor.value = ''
     }
@@ -16,10 +16,10 @@ function Consulta() {
         const inpValor = document.getElementById('inpValor')
         let filtro = ''
 
-        if (inpValor.value === ''){
+        if (inpValor.value === '') {
             document.getElementById('erroValor').classList.remove('d-none')
             return
-        } else{
+        } else {
             document.getElementById('erroValor').classList.add('d-none')
         }
 
@@ -56,27 +56,43 @@ function Consulta() {
     function ListaAssociados() {
         let elements = []
 
-        associados.forEach(associado => {
-            elements.push(
+        if (associados.length > 0) {
 
-                <div className="card mb-3" style={{minWidth: '100%'}} key={associado.id}>
-                    <div className="card-body">
-                        <h5 className="card-title mb-0">{associado.NOME}</h5>
-                        {associado.statusRF === 'A' ? <small style={{color: '#198754'}}><i className="bi bi-check-square"></i>&nbsp;RECONHECIMENTO FACIAL</small> : <small style={{color: '#dc3545'}}><i className="bi bi-x-square"></i>&nbsp;RECONHECIMENTO FACIAL</small>}
+            associados.forEach(associado => {
+                elements.push(
+
+                    <div className="card mb-3" style={{ minWidth: '100%' }} key={associado.id}>
+                        <div className="card-body">
+                            <h5 className="card-title mb-0">{associado.NOME}</h5>
+                            {associado.statusRF === 'A' ? <small style={{ color: '#198754' }}><i className="bi bi-check-square"></i>&nbsp;RECONHECIMENTO FACIAL</small> : <small style={{ color: '#dc3545' }}><i className="bi bi-x-square"></i>&nbsp;RECONHECIMENTO FACIAL</small>}
+                        </div>
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item"><strong>CPF:</strong> {associado.CPF}</li>
+                            <li className="list-group-item"><strong>Código:</strong> {associado.CODIGO}</li>
+                            {associado.NOME_TITU ? <li className="list-group-item"><strong>Nome Titular: </strong> {associado.NOME_TITU}</li> : <></>}
+                            <li className="list-group-item"><strong>Cota:</strong> {associado.TITULO}</li>
+                            <li className="list-group-item"><strong>N° Carteirinha:</strong> {associado.CARTEIRINHA}</li>
+
+                        </ul>
+                        {associado.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
                     </div>
-                    <ul className="list-group list-group-flush">
-                        <li className="list-group-item"><strong>CPF:</strong> {associado.CPF}</li>
-                        <li className="list-group-item"><strong>Código:</strong> {associado.CODIGO}</li>
-                        {associado.NOME_TITU ? <li className="list-group-item"><strong>Nome Titular: </strong> {associado.NOME_TITU}</li> : <></>}
-                        <li className="list-group-item"><strong>Cota:</strong> {associado.TITULO}</li>
-                        <li className="list-group-item"><strong>N° Carteirinha:</strong> {associado.CARTEIRINHA}</li>
 
-                    </ul>
-                    {associado.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <div className='liberado p-1'>NÃO INADIMPLENTE</div>}
+                )
+            })
+        } else {
+            elements.push(
+                <div className="card" key={Math.random()}>
+                    <div className="card-header fw-bolder" style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
+                        NENHUM RESULTADO
+                    </div>
+                    <div className="card-body">
+                        <p className="card-text">Verifique se os filtros foram configurados corretamente.</p>
+
+                    </div>
                 </div>
-
             )
-        })
+
+        }
 
         return elements
     }
