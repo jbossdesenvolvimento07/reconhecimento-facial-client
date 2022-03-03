@@ -12,7 +12,6 @@ function Consulta() {
         inpValor.value = ''
     }
     function getAssociados() {
-
         const inpValor = document.getElementById('inpValor')
         let filtro = ''
 
@@ -49,6 +48,8 @@ function Consulta() {
 
                 setAssociados(res.data)
                 console.log(res.data)
+
+                document.getElementById('displayListaAssociados').classList.remove('d-none')
 
             })
     }
@@ -129,9 +130,13 @@ function Consulta() {
 
             <button onClick={getAssociados} className='btn btn-success' >BUSCAR</button>
 
-            <div className='titulo w-100 my-4 border-bottom'>
+            <div className='titulo w-100 my-4 border-bottom'></div>
+
+            <div className='d-none' id='displayListaAssociados'>
+                <ListaAssociados></ListaAssociados>
             </div>
-            <ListaAssociados></ListaAssociados>
+            
+
         </div>
     )
 }

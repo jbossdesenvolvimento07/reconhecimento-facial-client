@@ -8,12 +8,7 @@ function Validacao() {
     const [carregando, setCarregando] = React.useState(false)
 
     const [valSuccess, setValSuccess] = React.useState(false)
-    const [valFail, setValFail] = React.useState(false)
     const [valNotFound, setValNotFound] = React.useState(false)
-
-    const [imageSuccess, setImageSuccess] = React.useState('')
-
-    const [dadosSocio, setDadosSocio] = React.useState({})
 
     const [sociosDetectados, setSociosDetectados] = React.useState([]);
 
@@ -69,22 +64,6 @@ function Validacao() {
 
         setCarregando(false)
 
-        /*console.log(data)
-
-        if (data.length > 0) {
-            if (data[0].dados === 'unknown') {
-                setValFail(true)
-            }
-            else {
-                setValSuccess(true)
-                setImageSuccess(data[0].foto)
-                setDadosSocio(data[0].dados)
-            }
-
-        } else {
-            setValNotFound(true)
-        }*/
-
         console.log(data)
 
         if (data.length > 0) {
@@ -136,8 +115,7 @@ function Validacao() {
             });
         } else {
             elements.push(
-                <div>
-                    <div className="card">
+                    <div className="card" key={Math.random()}>
                         <div className="card-header fw-bolder" style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
                             ASSOCIADO NÃO RECONHECIDO
                         </div>
@@ -146,7 +124,6 @@ function Validacao() {
                             
                         </div>
                     </div>
-                </div>
             )
         }
 
@@ -178,40 +155,11 @@ function Validacao() {
 
             <Modal fade={false} isOpen={valSuccess} fullscreen>
                 <ModalBody>
-                    {/*<div className="card mb-3 d-flex">
-                        <div className="card-body cardAssociado" style={{width: '60%'}}>
-                            <p className="card-subtitle mb-2 border-bottom"><strong>Nome</strong> <br />{dadosSocio.NOME}</p>
-                            {dadosSocio.NOME_TITU ? <p className="card-subtitle mb-2 border-bottom"><strong>Nome Titular</strong> <br />{dadosSocio.NOME_TITU}</p> : <></>}
-                            <p className="card-subtitle "><strong>N° Carteirinha</strong> <br />{dadosSocio.CARTEIRINHA}</p>
-                        </div>
-                        {dadosSocio.INADIMPLENTE !== 'N' ? <div className='inadimplente p-1'>INADIMPLENTE</div> : <div className='liberado p-1'>LIBERADO</div>}
-
-                    </div>
-
-                    <div className="card mt-4 mx-5">
-                        <img src={imageSuccess} className="card-img-top shadow rounded" alt='' />
-                    </div>*/}
 
                     <DisplaySociosDetectados></DisplaySociosDetectados>
 
                     <ModalFooter className='mt-3 justify-content-center'>
                         <button className='btn btn-primary' onClick={() => { setValSuccess(false) }}>
-                            CONFIRMAR
-                        </button>
-                    </ModalFooter>
-                </ModalBody>
-
-            </Modal>
-
-            <Modal fade={false} isOpen={valFail} fullscreen>
-                <ModalHeader style={{ backgroundColor: '#dc3545', color: '#FFF' }}>
-                    <strong>ASSOCIADO NÃO RECONHECIDO</strong>
-                </ModalHeader>
-                <ModalBody>
-                    O rosto do associado não consta no aplicativo de reconhecimento facial, verifique se o associado possui cadastro no sistema.
-
-                    <ModalFooter className='mt-3 justify-content-center'>
-                        <button className='btn btn-primary' onClick={() => { setValFail(false) }}>
                             CONFIRMAR
                         </button>
                     </ModalFooter>
