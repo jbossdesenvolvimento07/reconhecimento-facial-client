@@ -15,7 +15,6 @@ function Cadastro() {
     const [cadastroFail, setCadastroFail] = React.useState(false)
     const [cadastroFailImages, setCadastroFailImages] = React.useState([])
 
-    const [cpf, setCpf] = React.useState('')
     const [dataUrls, setDataUrls] = React.useState(['', '', ''])
 
 
@@ -64,10 +63,8 @@ function Cadastro() {
         if (inpCPF.value === '') {
             document.getElementById('erroCPF').classList.remove('d-none')
         } else {
-            setCpf(inpCPF.value)
 
-
-            axios.post(`${process.env.REACT_APP_ENDERECO_API}/getDadosUser`, { "cpf": cpf })
+            axios.post(`${process.env.REACT_APP_ENDERECO_API}/getDadosUser`, { "cpf": inpCPF.value })
                 .then((res) => {
 
                     if (res.data) {
