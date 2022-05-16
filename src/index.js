@@ -18,7 +18,7 @@ ReactDOM.render(
         <Route path="/remocao" element={<Remocao />} />
         <Route path="/consulta" element={<Consulta />} />
         <Route path="/portaria" element={<Portaria />} />
-        <Route path="/configuracao" element={<Configuracao />} />
+        <Route path="/config" element={<Configuracao />} />
       </Routes>
     </Router>
   </>,

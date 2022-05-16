@@ -6,7 +6,7 @@ function Configuracao() {
 
     //Carrega as configurações atuais
     useEffect(() => {
-        axios.get('http://jboss.ddns.me:6061/getConfig')
+        axios.get(`${process.env.REACT_APP_ENDERECO_API}/getConfig`)
             .then(res => {
                 const config = res.data
 
@@ -21,7 +21,7 @@ function Configuracao() {
 
     
     function updateRange(){
-        setrange(rangeInp.current.value)
+        setrange(parseFloat(rangeInp.current.value).toFixed(3))
     }
 
 
@@ -33,7 +33,7 @@ function Configuracao() {
             'distanceThreshold': parseFloat(rangeInp.current.value)
         }
 
-        axios.post('http://jboss.ddns.me:6061/setConfig', config)
+        axios.post(`${process.env.REACT_APP_ENDERECO_API}/setConfig`, config)
             .then(res => {
                 console.log(res)
 
@@ -60,8 +60,8 @@ function Configuracao() {
             </div>
             
             <div className='mb-3'>
-                <label htmlFor="customRange3" className="form-label w-100">Distância aceitável<strong className='float-end'>{(range * 100).toFixed(0)}%</strong></label>
-                <input ref={rangeInp} value={range} type="range" className="form-range" min={0.1} max={0.9} step="0.05" id="rangeInp" onChange={updateRange} />
+                <label htmlFor="customRange3" className="form-label w-100">Distância aceitável<strong className='float-end'>{range}</strong></label>
+                <input ref={rangeInp} value={range} type="range" className="form-range" min={0.1} max={0.9} step="0.005" id="rangeInp" onChange={updateRange} />
                 <p className='text-muted'>Padrão: 50%</p>
             </div>
 

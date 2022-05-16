@@ -24,7 +24,7 @@ function Header() {
                         <NavLink to="/validacao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-check-square me-2"></i>Validação </NavLink>
                         <NavLink to="/cadastro" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-plus-square me-2"></i>Cadastro </NavLink>
                         <NavLink to="/remocao" className="NavbarLink my-2 m-md-0 me-md-3" onClick={() => {setCollapse(false)}}><i className="bi bi-dash-square me-2"></i>Remoção </NavLink>
-                        <NavLink to="/configuracao" className="NavbarLink mt-4 mb-2 m-md-0" onClick={() => {setCollapse(false)}}><i className="bi bi-gear me-2"></i>Configurações </NavLink>
+                        
                     </Nav>
                 </Collapse>
             </Navbar>

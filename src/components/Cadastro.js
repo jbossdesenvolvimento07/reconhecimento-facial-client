@@ -242,8 +242,8 @@ function Cadastro() {
 
                 console.log('imagem carregada')
 
-                canvas.width = imageObj.width * 0.2
-                canvas.height = imageObj.height * 0.2
+                canvas.width = imageObj.width * 0.4
+                canvas.height = imageObj.height * 0.4
 
                 ctx.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
 
