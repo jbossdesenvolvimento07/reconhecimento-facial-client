@@ -37,7 +37,7 @@ function Home() {
 
                 <NavLink to="/dados" className='btnHome'>
                     <div>
-                       <p className='mb-0 fs-2 fw-bolder'><i className="bi bi-filter-square me-1"></i> DADOS</p> 
+                       <p className='mb-0 fs-2 fw-bolder'><i className="bi bi-code-square me-1"></i> DADOS</p> 
                        <p className='mb-0'>Estatisticas e informações.</p>
                     </div>
                     
