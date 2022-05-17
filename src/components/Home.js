@@ -35,6 +35,15 @@ function Home() {
 
             <div className='container d-flex flex-column justify-content-center align-items-center mt-4'>
 
+                <NavLink to="/dados" className='btnHome'>
+                    <div>
+                       <p className='mb-0 fs-2 fw-bolder'><i className="bi bi-filter-square me-1"></i> DADOS</p> 
+                       <p className='mb-0'>Estatisticas e informações.</p>
+                    </div>
+                    
+                    <i className="bi bi-chevron-right ms-2 fs-1"></i> 
+                </NavLink>
+
                 <NavLink to="/consulta" className='btnHome'>
                     <div>
                        <p className='mb-0 fs-2 fw-bolder'><i className="bi bi-filter-square me-1"></i> CONSULTA</p> 
