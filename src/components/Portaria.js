@@ -82,6 +82,7 @@ function Portaria() {
 
         axios.post(`${process.env.REACT_APP_ENDERECO_API}/validar`, { "dataUrl": dataUrl1 })
             .then(res => handleResponse(res.data))
+            .catch(err => {console.log(err); setAttConsulta(!attConsulta)})
 
         //axios.post('http://jboss.ddns.me:6061/validar', { "dataUrl": dataUrl2 })
             //.then(res => handleResponse(res.data))
